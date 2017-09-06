@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+  {% if post %}
+    <p>{{post.title}}</p>
+    <p>{{post.content}}</p>
+  {% else %}
+    <p>No post</p>
+  {% endif %}
+{% endblock %}

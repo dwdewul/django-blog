@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Hi</h1>
+  {% for post in posts %}
+    <h3>{{post.title}}</h3>
+    <a href="{{post.get_absolute_url}}"><p>Post ID: {{post.id}}</p></a>
+    <p>{{post.content}}</p>
+    <p>{{post.timestamp}}</p>
+  {% endfor %}
+{% endblock %}
