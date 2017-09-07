@@ -1,4 +1,5 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
+from django.shortcuts import (render, HttpResponse,
+                              get_object_or_404, redirect, Http404)
 from urllib.parse import quote_plus
 from .models import Post
 from .forms import PostForm
@@ -25,10 +26,12 @@ def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
     share_string = quote_plus(post.content)
     return render(request, 'posts/post-detail.html', {'post': post,
-                                                    'share_string': share_string})
+                                                      'share_string': share_string})
 
 
 def post_update(request, slug):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
     post = get_object_or_404(Post, slug=slug)
     form = PostForm(request.POST or None, request.FILES or None, instance=post)
     if form.is_valid():
@@ -41,9 +44,12 @@ def post_update(request, slug):
 
 
 def post_create(request):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
     form = PostForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         new_post = form.save(commit=False)
+        new_post.user = request.user
         new_post.save()
         messages.success(request, "Post successfully created!")
         return redirect(new_post.get_absolute_url())
@@ -51,6 +57,8 @@ def post_create(request):
 
 
 def post_delete(request, slug):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
     post = get_object_or_404(Post, slug=slug)
     post.delete()
     messages.success(request, "Post deleted")

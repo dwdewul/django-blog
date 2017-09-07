@@ -15,32 +15,50 @@
   </div>
   {% endif %}
   {% if post %}
-    <p>{{post.title}}</p>
-    {% if post.image %}
-      <p><img src="{{ post.image.url }}" class="img-responsive" alt="post picture"></p>
-    {% endif %}
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 text-center">
+      {% if post.image %}
+        <p><img src="{{ post.image.url }}" class="img-responsive" alt="post picture" style="margin: auto"></p>
+      {% endif %}
+      <p>{{post.title}}</p>
+      <p>Author: {{post.user}}</p>
 
-    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
-      Facebook
-    </a>
-    <a href="https://twitter.com/home?status={{ share_string }}%20{{ request.build_absolute_uri }}">
-      Twitter
-    </a>
-    <a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>
-      Google+
-    </a>
-    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ post.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}">
-      Linkedin
-    </a>
-    <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ share_string }}.">
-      Reddit
-    </a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+        Facebook
+      </a>
+      <a href="https://twitter.com/home?status={{ share_string }}%20{{ request.build_absolute_uri }}">
+        Twitter
+      </a>
+      <a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>
+        Google+
+      </a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ post.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}">
+        Linkedin
+      </a>
+      <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ share_string }}.">
+        Reddit
+      </a>
+      
+      <div class="card">
+        <p>{{post.content|linebreaks}}</p>
+      </div>
 
-    <p>{{post.content|linebreaks}}</p>
+      <div class="fb-like col-md-12"
+         data-href="{{ request.build_absolute_uri }}"
+         data-layout="standard"
+         data-action="like"
+         data-show-faces="true">
+       </div>
 
-  {% else %}
-    <p>No post</p>
-  {% endif %}
+      <div class="fb-comments"
+            data-href="{{ request.build_absolute_uri }}"
+            data-numposts="5">
+      </div>
 
+      {% else %}
+        <p>No post</p>
+      {% endif %}
+    </div>
+  </div>
 
 {% endblock %}
