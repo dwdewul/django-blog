@@ -1,5 +1,19 @@
 {% extends "base.html" %}
+{% block title %}
+  Post Details | {{post.title}}
+{% endblock %}
 {% block content %}
+  {% if messages %}
+  <div class="row">
+    <div class="col-md-4">
+      {% for message in messages %}
+        <div class="alert alert-success">
+          {{message}}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
   {% if post %}
     <p>{{post.title}}</p>
     <p>{{post.content}}</p>
