@@ -16,8 +16,31 @@
   {% endif %}
   {% if post %}
     <p>{{post.title}}</p>
-    <p>{{post.content}}</p>
+    {% if post.image %}
+      <p><img src="{{ post.image.url }}" class="img-responsive" alt="post picture"></p>
+    {% endif %}
+
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+      Facebook
+    </a>
+    <a href="https://twitter.com/home?status={{ share_string }}%20{{ request.build_absolute_uri }}">
+      Twitter
+    </a>
+    <a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>
+      Google+
+    </a>
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ post.title }}&summary={{ share_string }}&source={{ request.build_absolute_uri }}">
+      Linkedin
+    </a>
+    <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ share_string }}.">
+      Reddit
+    </a>
+
+    <p>{{post.content|linebreaks}}</p>
+
   {% else %}
     <p>No post</p>
   {% endif %}
+
+
 {% endblock %}
